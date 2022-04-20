@@ -61,6 +61,7 @@ client.on("message", (message) => {
       )
       .then((resp) => {
         const data = resp.data.data;
+        let activePropFound = false;
         data.forEach((propData) => {
           const {
             title,
@@ -99,8 +100,22 @@ client.on("message", (message) => {
               "Boardroom",
               "https://boardroom.io/favicons/apple-icon-57x57.png"
             );
+          activePropFound = true;
           message.channel.send(exampleEmbed);
         });
+        if (activePropFound === false) {
+          const color = "#757575";
+          const exampleEmbed = new Discord.MessageEmbed()
+            .setColor(color)
+            .setTitle("There are no active proposals currently")
+            .setURL(`https://boardroom.io/${process.env.DAO}`)
+            .setTimestamp()
+            .setFooter(
+              "Boardroom",
+              "https://boardroom.io/favicons/apple-icon-57x57.png"
+            );
+          message.channel.send(exampleEmbed);
+        }
       });
   }
 });
